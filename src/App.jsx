@@ -1,7 +1,9 @@
+import Header from "./components/Header";
+
 function App() {
   return (
     <>
-      <h1>Online Food Ordering App</h1>
+      <Header/>
     </>
   );
 }
