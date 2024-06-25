@@ -7,29 +7,29 @@ export default function Meals() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchMeals(){
-        // setIsLoading(true);
-        const response = await fetch("http://localhost:3000/meals");
+    async function fetchMeals() {
+      // setIsLoading(true);
+      const response = await fetch("http://localhost:3000/meals");
 
-        if(!response.ok){
-            // ...
-        }
-        const meals = await response.json();
-        setLoadedMeals(meals);
-        // setIsLoading(false);
-
-
+      if (!response.ok) {
+        // ...
+      }
+      const meals = await response.json();
+      setLoadedMeals(meals);
+      // setIsLoading(false);
     }
 
-
     fetchMeals();
-  },[])
+  }, []);
 
   return (
     <ul id="meals">
-      {loadedMeals.map((meal) => (
-        <MealItem key={meal.id} meal={meal}/>
-      ))}
+      {loadedMeals.map((meal) => {
+        {
+          /* console.log("rendering meal:", meal); */
+        }
+        return <MealItem key={meal.id} meal={meal} />;
+      })}
     </ul>
   );
 }
