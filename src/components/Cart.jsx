@@ -33,7 +33,7 @@ export default function Cart() {
         <Button textOnly onClick={hideCart}>
           Close
         </Button>
-        <Button>Checkout</Button>
+        {totalCartPrice>0 && <Button>Checkout</Button>}
       </p>
     </Modal>
   );
