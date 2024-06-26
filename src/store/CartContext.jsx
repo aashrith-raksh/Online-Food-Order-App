@@ -66,7 +66,7 @@ export default function CartContextProvider({ children }) {
     dispatchCartAction({ type: "ADD_ITEM", item });
   }
   function removeItem(id) {
-    dispatchCartAction({ type: "ADD_ITEM", id });
+    dispatchCartAction({ type: "REMOVE_ITEM", id });
   }
 
   const ctxValue = {
