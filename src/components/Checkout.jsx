@@ -19,7 +19,6 @@ export default function Checkout() {
     hideCheckout();
   }
 
-  console.log("progress in Chckout:", progress);
 
   return (
     <Modal
