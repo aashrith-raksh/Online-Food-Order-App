@@ -4,10 +4,25 @@ import Input from "./UI/Input";
 import Modal from "./UI/Modal";
 import UserProgressContext from "../store/UserProgressContext";
 import { CartContext } from "../store/CartContext";
+import useFetch from "./hooks/useFetch";
+
+const requestConfig = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
 
 export default function Checkout() {
   const { progress, hideCheckout } = useContext(UserProgressContext);
   const ctxValue = useContext(CartContext);
+
+  const {
+    data,
+    isLoading: isSending,
+    error,
+    sendRequest,
+  } = useFetch("http://localhost:3000/orders", [], requestConfig);
 
   const totalCartPrice = ctxValue.items.reduce(
     (totalPrice, item) => totalPrice + item.price * item.quantity,
@@ -25,18 +40,34 @@ export default function Checkout() {
     const fd = new FormData(event.target);
     const customerData = Object.fromEntries(fd.entries());
 
-    fetch("http://localhost:3000/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    sendRequest(
+      JSON.stringify({
         order: {
           items: ctxValue.items,
           customer: customerData,
         },
-      }),
-    });
+      })
+    );
+  }
+
+  let actions = (
+    <>
+      <div className="modal-actions">
+        <Button type="button" textOnly onClick={handleClose}>
+          Close
+        </Button>
+        <Button>Submit</Button>
+      </div>
+    </>
+  );
+
+  if (isSending) {
+    actions = <p className="center">Sending order request</p>
+  }
+
+  if(isSending && error){
+    actions = <p className="center">{error}</p>
+
   }
 
   return (
@@ -57,12 +88,7 @@ export default function Checkout() {
           <Input label="City" type="text" id="city" />
         </div>
 
-        <div className="modal-actions">
-          <Button type="button" textOnly onClick={handleClose}>
-            Close
-          </Button>
-          <Button>Submit</Button>
-        </div>
+        {actions}
       </form>
     </Modal>
   );
