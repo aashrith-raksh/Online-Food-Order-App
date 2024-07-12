@@ -18,6 +18,10 @@ export default function useFetch(url, initialData, config ) {
   const [error, setError] = useState("");
   const [data, setData] = useState(initialData);
 
+  function clearData(){
+    setData(initialData)
+  }
+
   const sendRequest = useCallback(
     async function sendRequest(configBody) {
       setIsLoading(true);
@@ -41,6 +45,7 @@ export default function useFetch(url, initialData, config ) {
     }
   }, [sendRequest, config]);
 
-  console.log(initialData)
-  return { data, isLoading, error, sendRequest };
+  console.log("initialData", initialData)
+  console.log("final data", data)
+  return { data, isLoading, error, sendRequest, clearData};
 }
