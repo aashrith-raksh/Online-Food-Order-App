@@ -45,7 +45,5 @@ export default function useFetch(url, initialData, config ) {
     }
   }, [sendRequest, config]);
 
-  console.log("initialData", initialData)
-  console.log("final data", data)
   return { data, isLoading, error, sendRequest, clearData};
 }
