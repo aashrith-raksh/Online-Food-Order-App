@@ -22,6 +22,7 @@ export default function Checkout() {
     isLoading: isSending,
     error,
     sendRequest,
+    clearData,
   } = useFetch("http://localhost:3000/orders", [], requestConfig);
 
   const totalCartPrice = ctxValue.items.reduce(
@@ -50,6 +51,12 @@ export default function Checkout() {
     );
   }
 
+  function handleClearCart() {
+    hideCheckout();
+    ctxValue.clearCart();
+    clearData();
+  }
+
   let actions = (
     <>
       <div className="modal-actions">
@@ -62,13 +69,29 @@ export default function Checkout() {
   );
 
   if (isSending) {
-    actions = <p className="center">Sending order request</p>
+    actions = <p className="center">Sending order request</p>;
   }
 
-  if(isSending && error){
-    actions = <p className="center">{error}</p>
-
+  if (isSending && error) {
+    actions = <p className="center">{error}</p>;
   }
+
+  if (!isSending && data.message && !error) {
+    actions = (
+      <Modal
+        open={progress === "checkout"}
+        onCloseHandler={progress === "cart" ? handleClose : null}
+      >
+        <h2>Success!!</h2>
+        <p>We've received your order</p>
+        <Button type="button" onClick={handleClearCart}>
+          Okay
+        </Button>
+      </Modal>
+    );
+  }
+
+  console.log("actions,", actions);
 
   return (
     <Modal
