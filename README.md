@@ -43,12 +43,7 @@ The College Food Ordering App is a full-stack application that allows students t
    ```
 4. Install frontend dependencies:
    ```
-   cd ../frontend
-   npm install
-   ```
-4. Install frontend dependencies:
-   ```
-   cd ../frontend
+   cd ..
    npm install
    ```
 5. Start the backend server::
@@ -58,7 +53,7 @@ The College Food Ordering App is a full-stack application that allows students t
    ```
 6. Start the frontend server::
    ```
-   cd ../frontend
+   cd ..
    npm run dev
    ```
 ## Usage
